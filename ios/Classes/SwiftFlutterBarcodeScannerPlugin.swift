@@ -254,8 +254,11 @@ class BarcodeScannerViewController: UIViewController {
     
     // Inititlize components
     func initBarcodeComponents(){
-        
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInTripleCamera, .builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back)
+        if #available(iOS 13.0, *) {
+          let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInTripleCamera, .builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back)
+        } else {
+          let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back)
+        }
         // Get the back-facing camera for capturing videos
         guard let captureDevice = deviceDiscoverySession.devices.first else {
             print("Failed to get the camera device")
